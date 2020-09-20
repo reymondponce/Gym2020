@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 namespace ProyectoFinal2020
 {
     public class Program
+
+        //Quiero probar de esta forma de mierda
     {
         public static void Main(string[] args)
         {
