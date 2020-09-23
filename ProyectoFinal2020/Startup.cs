@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProyectoFinal2020.Model;
 using ProyectoFinal2020.Models;
 
 namespace ProyectoFinal2020
@@ -27,17 +28,22 @@ namespace ProyectoFinal2020
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // options.CheckConsentNeeded = ContextBoundObject => true;
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // options.CheckConsentNeeded = ContextBoundObject => true;
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+            //services.AddDbContext<GymContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddDbContext<GymContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+           options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
