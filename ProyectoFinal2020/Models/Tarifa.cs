@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProyectoFinal2020.Model
+namespace ProyectoFinal2020.Models
 {
     public partial class Tarifa
     {

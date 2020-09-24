@@ -3,31 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using ProyectoFinal2020.Models;
-using SQLitePCL;
 
 namespace ProyectoFinal2020.Controllers
 {
-    public class EmpleadosController : Controller
+    public class ActividadsController : Controller
     {
         private readonly GymContext _context;
 
-        public EmpleadosController(GymContext context)
+        public ActividadsController(GymContext context)
         {
             _context = context;
         }
 
-        // GET: Empleados
+        // GET: Actividads
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Empleado.ToListAsync());
+            return View(await _context.Actividad.ToListAsync());
         }
 
-        // GET: Empleados/Details/5
+        // GET: Actividads/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,50 +32,43 @@ namespace ProyectoFinal2020.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.Empleado
-                .FirstOrDefaultAsync(m => m.IdEmpleado == id);
-            if (empleado == null)
+            var actividad = await _context.Actividad
+                .FirstOrDefaultAsync(m => m.IdActividad == id);
+            if (actividad == null)
             {
                 return NotFound();
             }
 
-            return View(empleado);
+            return View(actividad);
         }
 
-        // GET: Empleados/Create
+        // GET: Actividads/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Empleados/Create
+        // POST: Actividads/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdEmpleado,Identificacion,Nombre,Apellido1,Apellido2,FechaNac,Telefono,Direccion,Email,Sexo,Area,TipoDeEmp,NumeroSocial,NumeroBancario,Ccss,Profesion,FechaContrato,Estado")] Empleado empleado)
+        public async Task<IActionResult> Create([Bind("IdActividad,Nombre,Descripcion,Duracion")] Actividad actividad)
         {
             if (ModelState.IsValid)
             {
-                var validacionDNI = _context.Empleado.Any(e => e.Identificacion.Equals(empleado.Identificacion));
-                var validacionEmail = empleado.Email.Equals("@gmail.com");
-                //if(validacionDNI){
-                //    ModelState.AddModelError("Identificacion", "Este empleado ya esta registrado");
-                //    return View("Create");
-
-                //}
-                //if (!validacionEmail) {
-                //    ModelState.AddModelError("Email", "No ha ingresado el email correctamente");
-                //    return View("Create");
-                //}
-                _context.Add(empleado);
+                _context.Add(actividad);
                 await _context.SaveChangesAsync();
+              
                 return RedirectToAction(nameof(Index));
+               
             }
-            return View(empleado);
+            return View(actividad);
         }
 
-        // GET: Empleados/Edit/5
+     
+
+        // GET: Actividads/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,22 +76,22 @@ namespace ProyectoFinal2020.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.Empleado.FindAsync(id);
-            if (empleado == null)
+            var actividad = await _context.Actividad.FindAsync(id);
+            if (actividad == null)
             {
                 return NotFound();
             }
-            return View(empleado);
+            return View(actividad);
         }
 
-        // POST: Empleados/Edit/5
+        // POST: Actividads/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEmpleado,Identificacion,Nombre,Apellido1,Apellido2,FechaNac,Telefono,Direccion,Email,Sexo,Area,TipoDeEmp,NumeroSocial,NumeroBancario,Ccss,Profesion,FechaContrato,Estado")] Empleado empleado)
+        public async Task<IActionResult> Edit(int id, [Bind("IdActividad,Nombre,Descripcion,Duracion")] Actividad actividad)
         {
-            if (id != empleado.IdEmpleado)
+            if (id != actividad.IdActividad)
             {
                 return NotFound();
             }
@@ -110,12 +100,12 @@ namespace ProyectoFinal2020.Controllers
             {
                 try
                 {
-                    _context.Update(empleado);
+                    _context.Update(actividad);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmpleadoExists(empleado.IdEmpleado))
+                    if (!ActividadExists(actividad.IdActividad))
                     {
                         return NotFound();
                     }
@@ -126,10 +116,10 @@ namespace ProyectoFinal2020.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(empleado);
+            return View(actividad);
         }
 
-        // GET: Empleados/Delete/5
+        // GET: Actividads/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,30 +127,30 @@ namespace ProyectoFinal2020.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.Empleado
-                .FirstOrDefaultAsync(m => m.IdEmpleado == id);
-            if (empleado == null)
+            var actividad = await _context.Actividad
+                .FirstOrDefaultAsync(m => m.IdActividad == id);
+            if (actividad == null)
             {
                 return NotFound();
             }
 
-            return View(empleado);
+            return View(actividad);
         }
 
-        // POST: Empleados/Delete/5
+        // POST: Actividads/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var empleado = await _context.Empleado.FindAsync(id);
-            _context.Empleado.Remove(empleado);
+            var actividad = await _context.Actividad.FindAsync(id);
+            _context.Actividad.Remove(actividad);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmpleadoExists(int id)
+        private bool ActividadExists(int id)
         {
-            return _context.Empleado.Any(e => e.IdEmpleado == id);
+            return _context.Actividad.Any(e => e.IdActividad == id);
         }
     }
 }
