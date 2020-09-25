@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace ProyectoFinal2020.Model
+namespace ProyectoFinal2020.Models
 {
     public partial class GymContext : DbContext
     {
@@ -38,11 +38,11 @@ namespace ProyectoFinal2020.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server= LAPTOP-NCM6N6CV\\SQLEXPRESS; Database= Gym;Trusted_Connection=True;");
-//            }
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=ELDER_AS\\SQLEXPRESS;Database=Gym;Trusted_Connection=True;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,8 +50,6 @@ namespace ProyectoFinal2020.Model
             modelBuilder.Entity<Actividad>(entity =>
             {
                 entity.HasKey(e => e.IdActividad);
-
-                entity.Property(e => e.IdActividad).ValueGeneratedNever();
 
                 entity.Property(e => e.Descripcion)
                     .IsRequired()

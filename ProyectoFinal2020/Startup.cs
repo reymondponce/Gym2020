@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProyectoFinal2020.Model;
+
 using ProyectoFinal2020.Models;
 
 namespace ProyectoFinal2020

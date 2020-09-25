@@ -33,3 +33,21 @@ for (i = 0; i < dropdown.length; i++) {
         }
     });
 }
+
+function ConfirmarEliminar() {
+    if (confirm("Está seguro de eliminar esta información?"))
+        return true;
+    else
+        return false;
+       
+
+}
+function confirmarGuardar() {
+    (Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Guardado con exito!',
+        showConfirmButton: false,
+        timer: 2000
+    }));
+}
